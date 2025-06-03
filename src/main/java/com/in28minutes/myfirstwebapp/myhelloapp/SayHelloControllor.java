@@ -39,7 +39,6 @@ public class SayHelloControllor {
 
 
     @RequestMapping("/say-hello-jsp")
-
     public String sayHellojsp(){
         return "say-hello-jsp";
     }
