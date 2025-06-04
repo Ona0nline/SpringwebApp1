@@ -2,6 +2,8 @@ package com.in28minutes.myfirstwebapp.todo;
 
 import jakarta.validation.Valid;
 import org.apache.coyote.Request;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,7 +30,8 @@ public class ToDoControllor {
 
     @RequestMapping("/list_todos")
     public String listAllTodos(ModelMap model){
-        List<Todo> todos = toDoService.findByUsername("Ona");
+        String username = (String)model.get("name");
+        List<Todo> todos = toDoService.findByUsername(username);
         model.put("todos", todos);
         return "listTodos";
     }
@@ -73,9 +76,15 @@ public class ToDoControllor {
             return "todo";
         }
 //        Post request redirects you back to list todos page
-        String username = (String)modelMap.get("name");
+        String username = getLoggedinUsername(modelMap);
         todo.setUsername(username);
         toDoService.updateTodo(todo);
         return "redirect:list_todos";
+    }
+
+
+    private String getLoggedinUsername(ModelMap modelMap){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }
