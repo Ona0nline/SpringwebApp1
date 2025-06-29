@@ -30,9 +30,10 @@ public class ToDoControllor {
 
     @RequestMapping("/list_todos")
     public String listAllTodos(ModelMap model){
-        String username = (String)model.get("name");
+        String username = getLoggedinUsername();
         List<Todo> todos = toDoService.findByUsername(username);
         model.put("todos", todos);
+        model.put("name", username);
         return "listTodos";
     }
 
