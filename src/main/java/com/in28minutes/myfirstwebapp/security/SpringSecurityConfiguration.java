@@ -20,9 +20,10 @@ public class SpringSecurityConfiguration {
 
         UserDetails userDetails1 = createNewUser("Onalerona", "mommy");
         UserDetails userDetails2 = createNewUser("Bubba", "password");
+        UserDetails userDetails3 = createNewUser("User", "visitor");
 
 
-        return new InMemoryUserDetailsManager(userDetails1,userDetails2);
+        return new InMemoryUserDetailsManager(userDetails1,userDetails2, userDetails3);
     }
 
     private UserDetails createNewUser(String username, String password) {
