@@ -46,13 +46,12 @@ public class ToDoControllor {
     }
 
     @RequestMapping(value = "/add-todo", method = RequestMethod.POST)
-    public String addTodos(ModelMap modelMap, @Valid Todo todo, BindingResult result){
-        if(result.hasErrors()){
+    public String addTodos(@Valid Todo todo, BindingResult result) {
+        if (result.hasErrors()) {
             return "todo";
         }
-//        Post request redirects you back to list todos page
-        String username = (String)modelMap.get("name");
-        toDoService.addTodo(username,todo.getDescription(), todo.getTargetDate(),false);
+        String username = getLoggedinUsername();
+        toDoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);
         return "redirect:list_todos";
     }
 
@@ -76,14 +75,14 @@ public class ToDoControllor {
             return "todo";
         }
 //        Post request redirects you back to list todos page
-        String username = getLoggedinUsername(modelMap);
+        String username = getLoggedinUsername();
         todo.setUsername(username);
         toDoService.updateTodo(todo);
         return "redirect:list_todos";
     }
 
 
-    private String getLoggedinUsername(ModelMap modelMap){
+    private static String getLoggedinUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
