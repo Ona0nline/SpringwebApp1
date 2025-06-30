@@ -15,10 +15,10 @@ public class WebMvcConfiguration {
         http
                 .headers(headers -> headers
                         .addHeaderWriter(
-                                new StaticHeadersWriter("X-Frame-Options", "ALLOW-FROM https://onaonlinereactportfolio.netlify.app/")
+                                new StaticHeadersWriter("X-Frame-Options", "ALLOW-FROM https://onaonlinereactportfolio.netlify.app/ http://localhost:3000")
                         )
                         .contentSecurityPolicy(csp -> csp
-                                .policyDirectives("frame-ancestors 'self' https://onaonlinereactportfolio.netlify.app/")
+                                .policyDirectives("frame-ancestors 'self' https://onaonlinereactportfolio.netlify.app/ http://localhost:3000")
                         )
                 );
 
